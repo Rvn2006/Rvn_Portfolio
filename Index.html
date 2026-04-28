@@ -40,19 +40,14 @@
       border: 1px solid rgba(0,229,255,0.25);
     }
     .project-card.ncaf-intro .proj-org { color: #ff3c3c; opacity: 0.8; }
-    /* scanline effect for intro */
     .ncaf-scanlines {
       position: absolute; inset: 0;
       background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 3px,
-        rgba(255,60,60,0.015) 3px,
-        rgba(255,60,60,0.015) 4px
+        0deg, transparent, transparent 3px,
+        rgba(255,60,60,0.015) 3px, rgba(255,60,60,0.015) 4px
       );
       pointer-events: none; z-index: 2;
     }
-    /* chromatic corner glow */
     .ncaf-intro-glow {
       position: absolute; bottom: -60px; left: -60px;
       width: 280px; height: 280px; border-radius: 50%;
@@ -95,7 +90,6 @@
       background: rgba(201,123,42,0.1);
       border: 1px solid rgba(201,123,42,0.25);
     }
-    /* decorative confetti dots */
     .ncaf-outro-dots {
       position: absolute; inset: 0;
       pointer-events: none; z-index: 1; overflow: hidden;
@@ -111,17 +105,177 @@
         50px 50px 0 rgba(220,60,60,0.15),
         10px 80px 0 rgba(0,120,200,0.15);
     }
-    /* festive warm glow top-right */
     .ncaf-outro-glow {
       position: absolute; top: -80px; right: -80px;
       width: 300px; height: 300px; border-radius: 50%;
       background: radial-gradient(circle, rgba(201,123,42,0.12) 0%, rgba(116,50,175,0.06) 50%, transparent 70%);
       pointer-events: none; z-index: 1;
     }
-    /* arrow dark for light card */
     .project-card.ncaf-outro .proj-arrow {
       border-color: rgba(116,50,175,0.3);
       color: #7432af;
+    }
+
+    /* ============================================================
+       MOBILE-SPECIFIC FIXES
+       ============================================================ */
+    @media (max-width: 768px) {
+
+      /* --- NAV --- */
+      nav { padding: 12px 16px; }
+      .nav-links { gap: 14px; }
+      .nav-links a { font-size: 11px; letter-spacing: 0.08em; }
+
+      /* --- HERO --- */
+      #hero {
+        grid-template-columns: 1fr;
+        padding: 88px 20px 56px;
+        gap: 36px;
+      }
+      .hero-illustration { order: -1; }
+      .illus-frame { width: 200px; margin: 0 auto; }
+      .illus-label { font-size: 8px; }
+      .hero-tag { font-size: 10px; padding: 5px 10px; margin-bottom: 20px; }
+      h1.hero-name { font-size: clamp(40px, 12vw, 64px); }
+      .hero-sub { font-size: 11px; margin: 16px 0 28px; }
+      .hero-roles { gap: 6px; margin-bottom: 28px; }
+      .role-pill { font-size: 9px; padding: 5px 10px; }
+      .hero-cta { flex-direction: column; gap: 10px; }
+      .btn-primary, .btn-secondary { text-align: center; padding: 12px 20px; font-size: 11px; }
+      .scroll-ind { left: 20px; bottom: 20px; font-size: 9px; }
+
+      /* --- STATS BAR --- */
+      .stats-bar { flex-wrap: wrap; }
+      .stat-item { flex: 1 1 50%; padding: 20px 16px; border-right: none; border-bottom: 1px solid var(--border); }
+      .stat-item:nth-child(odd) { border-right: 1px solid var(--border); }
+      .stat-item:last-child { border-bottom: none; }
+      .stat-num { font-size: 32px; }
+      .stat-label { font-size: 9px; }
+
+      /* --- SECTIONS GENERAL --- */
+      #projects { padding: 56px 16px; }
+      .section-title { font-size: clamp(26px, 8vw, 38px); }
+      .section-num { font-size: 10px; }
+      .section-header { gap: 12px; margin-bottom: 32px; }
+      .work-category { margin-bottom: 14px; }
+      .cat-label { font-size: 9px; }
+
+      /* --- PROJECT GRID --- */
+      .projects-grid { grid-template-columns: 1fr; gap: 8px; }
+      .project-card { min-height: 320px; }
+      .project-card.featured { grid-column: span 1; min-height: 340px; }
+      .proj-name { font-size: 18px; }
+      .proj-desc { font-size: 10px; line-height: 1.6; }
+      .proj-org { font-size: 9px; }
+      .proj-content { padding: 20px 18px; }
+      .proj-tag { font-size: 8px; padding: 2px 6px; }
+      .proj-cta { font-size: 9px; margin-top: 10px; }
+
+      /* --- LAKBAYGO MOBILE FIX --- */
+      .project-card.lakbay {
+        min-height: 380px;
+        display: flex;
+        flex-direction: column;
+      }
+      /* On mobile: image fills top portion */
+      .lakbay-img-wrap {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+      }
+      /* Override desktop gradient — fade from top on mobile */
+      .lakbay-img-wrap::before {
+        background: linear-gradient(to bottom, rgba(26,8,50,0.2) 0%, rgba(26,8,50,0.85) 65%, #1a0832 100%);
+      }
+      .lakbay-img-wrap img {
+        object-position: center center;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      /* Content panel goes full-width at bottom */
+      .lakbay-panel {
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        width: 100%;
+        padding: 20px 18px 24px;
+        z-index: 4;
+        background: linear-gradient(to top, #1a0832 60%, transparent);
+      }
+      .lakbay-badge-row { margin-bottom: 10px; }
+      .project-card.lakbay .proj-desc { font-size: 10px; line-height: 1.55; max-width: 100%; }
+      .project-card.lakbay .proj-name { font-size: 20px; }
+
+      /* --- MOTION CARDS --- */
+      .motion-grid { grid-template-columns: 1fr !important; gap: 8px; }
+      .motion-card { grid-column: span 1 !important; min-height: 280px; }
+      .proj-video-badge { font-size: 8px; top: 10px; left: 10px; }
+      .ncaf-intro-badge, .ncaf-outro-badge { font-size: 8px; top: 10px; left: 10px; }
+
+      /* --- E-LOCATE MOBILE FIX --- */
+      .project-card.elocate {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 300px;
+        min-height: unset;
+      }
+      .elocate-content-panel {
+        padding: 20px 18px;
+        justify-content: flex-start;
+      }
+      .elocate-content-panel::after { display: none; }
+      .elocate-screens { min-height: 300px; }
+      .elocate-slide img { max-height: 80%; max-width: 80%; }
+
+      /* --- ILLUSTRATION GRID --- */
+      .illus-grid { grid-template-columns: 1fr !important; gap: 8px; }
+      .illus-card, .illus-info-card { grid-column: span 1 !important; min-height: 280px; }
+      .illus-info-content { padding: 28px 20px; }
+      .illus-quote { font-size: 14px; padding-left: 14px; margin-bottom: 20px; }
+      .illus-desc { font-size: 11px; }
+      .tool-pill { font-size: 9px; padding: 5px 10px; }
+
+      /* --- ABOUT SECTION --- */
+      #about { padding: 56px 16px; }
+      .about-grid { grid-template-columns: 1fr; gap: 32px; }
+      .about-photo { max-width: 260px; }
+      .about-photo-border { display: none; }
+      .about-badge { max-width: 100%; }
+      .about-intro { font-size: 14px; line-height: 1.7; margin-bottom: 18px; }
+      .skills-list { grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 20px; }
+      .skill-item { font-size: 10px; padding: 8px 10px; }
+
+      /* --- CONTACT --- */
+      #contact { padding: 64px 16px; }
+      .contact-heading { font-size: clamp(32px, 11vw, 56px); }
+      .contact-sub { font-size: 11px; margin-bottom: 36px; }
+      .contact-links { flex-direction: column; align-items: stretch; gap: 10px; }
+      .contact-link { justify-content: center; padding: 12px 20px; font-size: 11px; }
+
+      /* --- FOOTER --- */
+      footer { padding: 18px 16px; flex-direction: column; gap: 6px; text-align: center; font-size: 10px; }
+
+      /* --- WORK CATEGORY SPACING --- */
+      .work-category { margin-top: 40px !important; }
+    }
+
+    /* Medium tablets 769-1100px */
+    @media (min-width: 769px) and (max-width: 1100px) {
+      nav { padding: 14px 28px; }
+      #hero { padding: 100px 28px 70px; gap: 32px; }
+      #projects { padding: 70px 28px; }
+      #about { padding: 70px 28px; }
+      #contact { padding: 80px 28px; }
+      footer { padding: 22px 28px; }
+
+      .motion-grid { grid-template-columns: 1fr 1fr !important; }
+      .motion-card { grid-column: span 1 !important; }
+      /* Last NCAF card on its own row centered */
+      .motion-grid .motion-card:nth-child(5) { grid-column: 1 / -1 !important; max-width: 50%; margin: 0 auto; }
+
+      .project-card.elocate {
+        grid-template-columns: 44% 56%;
+      }
+
+      .lakbay-panel { width: 55%; }
     }
   </style>
 </head>
@@ -243,7 +397,6 @@
     </div>
     <div class="projects-grid motion-grid">
 
-      <!-- Existing 3 cards -->
       <div class="project-card motion-card reveal">
         <div class="proj-img-overlay motion-overlay"></div>
         <video class="proj-video" autoplay muted loop playsinline>
@@ -289,13 +442,13 @@
         </div>
       </div>
 
-      <!-- ── NCAF INTRO ── dark, glitch, chromatic RGB -->
+      <!-- ── NCAF INTRO ── fixed: mp4 instead of mov -->
       <div class="project-card motion-card ncaf-intro reveal">
         <div class="ncaf-scanlines"></div>
         <div class="ncaf-intro-glow"></div>
         <div class="ncaf-intro-overlay"></div>
         <video class="proj-video" autoplay muted loop playsinline>
-          <source src="assets/ncaf_intro.mp4" type="video/mov"/>
+          <source src="assets/ncaf_intro.mp4" type="video/mp4"/>
         </video>
         <div class="ncaf-intro-badge"><span class="play-icon">▶</span> Intro</div>
         <div class="proj-arrow">↗</div>
@@ -310,7 +463,7 @@
         </div>
       </div>
 
-      <!-- ── NCAF OUTRO ── light, colorful, festive Pagsaulog -->
+      <!-- ── NCAF OUTRO ── fixed: mp4 -->
       <div class="project-card motion-card ncaf-outro reveal">
         <div class="ncaf-outro-glow"></div>
         <div class="ncaf-outro-dots"></div>
@@ -339,7 +492,6 @@
     </div>
     <div class="projects-grid">
       <div class="project-card featured elocate reveal">
-        <!-- Left: content -->
         <div class="elocate-content-panel">
           <div class="proj-featured-badge orange">UI/UX · Vendor App</div>
           <div class="proj-content">
@@ -353,7 +505,6 @@
             <a href="https://www.figma.com/proto/xXjw20v2jChFkCmhkmDLKR/PANUBLES-Web-Prototype?node-id=443-1924&starting-point-node-id=437%3A937&t=p6oABbOejUME2LFg-1" target="_blank" class="proj-cta orange-cta">View Prototype ↗</a>
           </div>
         </div>
-        <!-- Right: phone crossfade carousel -->
         <div class="elocate-screens">
           <div class="elocate-slide active" data-index="0">
             <img src="assets/elocate-stall-manager-nobg.png" alt="Stall Profile Manager"/>
@@ -494,10 +645,10 @@
 
       function goTo(n) {
         slides[cur].classList.remove('active');
-        dots[cur].classList.remove('active');
+        dots[cur] && dots[cur].classList.remove('active');
         cur = ((n % slides.length) + slides.length) % slides.length;
         slides[cur].classList.add('active');
-        dots[cur].classList.add('active');
+        dots[cur] && dots[cur].classList.add('active');
       }
 
       dots.forEach(function(d, i) {
