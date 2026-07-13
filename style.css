@@ -876,19 +876,116 @@ footer span { color: var(--accent); }
   .elocate-screens { min-height: 320px; }
 }
 
-/* NCAF cards — last two fill remaining row evenly */
-@media (min-width: 1101px) {
-  .motion-grid .motion-card:nth-child(4),
-  .motion-grid .motion-card:nth-child(5) {
-    grid-column: span 1;
+/* ============================================================
+   20. DAKKUTEK & AETHER BRANDING CARDS
+   ============================================================ */
+
+/* 2-column branding grid */
+.branding-grid {
+  grid-template-columns: 1fr 1fr !important;
+  gap: 2px;
+  margin-top: 2px;
+}
+
+.brand-card {
+  grid-column: span 1;
+  min-height: 500px;
+  position: relative;
+  overflow: hidden;
+  cursor: none;
+}
+
+/* ── Shared image wrapper ── */
+.brand-img-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.brand-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.7s cubic-bezier(.25,.46,.45,.94);
+}
+.project-card.brand-card:hover .brand-img-wrap img {
+  transform: scale(1.04);
+}
+
+/* ── Shared gradient scrim (bottom-up, dark) ── */
+.brand-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── DAKKUTEK — warm gold/champagne scrim ── */
+.project-card.dakkutek {
+  background: #1a1408;
+}
+.dakkutek-scrim {
+  background: linear-gradient(
+    to bottom,
+    rgba(26,20,8,0.05)  0%,
+    rgba(26,20,8,0.15) 35%,
+    rgba(26,20,8,0.82) 65%,
+    rgba(26,20,8,0.98) 100%
+  );
+}
+.project-card.dakkutek:hover { border-color: rgba(193,163,95,0.4) !important; }
+
+.dkt-tag {
+  color: #c1a35f !important;
+  background: rgba(193,163,95,0.1) !important;
+  border: 1px solid rgba(193,163,95,0.25) !important;
+}
+.project-card.dakkutek .proj-name { color: #f0e8d0; }
+.project-card.dakkutek .proj-desc { color: #9a8c72; }
+.project-card.dakkutek .proj-org  { color: #c1a35f; opacity: 0.8; }
+.project-card.dakkutek .proj-arrow {
+  border-color: rgba(193,163,95,0.35) !important;
+  color: #c1a35f !important;
+}
+
+/* ── AETHER — deep green/teal scrim ── */
+.project-card.aether {
+  background: #031a10;
+}
+.aether-scrim {
+  background: linear-gradient(
+    to bottom,
+    rgba(3,26,16,0.05)  0%,
+    rgba(3,26,16,0.15) 35%,
+    rgba(3,26,16,0.82) 65%,
+    rgba(3,26,16,0.98) 100%
+  );
+}
+.project-card.aether:hover { border-color: rgba(27,186,111,0.4) !important; }
+
+.aether-tag {
+  color: #1bba6f !important;
+  background: rgba(27,186,111,0.1) !important;
+  border: 1px solid rgba(27,186,111,0.25) !important;
+}
+.aether-arrow {
+  border-color: rgba(27,186,111,0.35) !important;
+  color: #1bba6f !important;
+}
+.aether-org { color: #1bba6f !important; opacity: 0.8; }
+.project-card.aether .proj-desc { color: #6a9a7a; }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .branding-grid {
+    grid-template-columns: 1fr !important;
   }
-  /* Make row of 2 centered by spanning 1.5 cols each — use subgrid trick */
-  .motion-grid {
-    grid-template-columns: repeat(6, 1fr);
+  .brand-card {
+    grid-column: span 1 !important;
+    min-height: 360px;
   }
-  .motion-grid .motion-card {
-    grid-column: span 2;
-  }
-  .motion-grid .motion-card:nth-child(4) { grid-column: 2 / 4; }
-  .motion-grid .motion-card:nth-child(5) { grid-column: 4 / 6; }
+}
+
+@media (min-width: 901px) and (max-width: 1100px) {
+  .brand-card { min-height: 420px; }
 }

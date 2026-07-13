@@ -6,388 +6,6 @@
   <title>Arvin Bearneza — Creative Developer</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
-  <style>
-    /* ── NCAF INTRO CARD ── */
-    .project-card.ncaf-intro {
-      background: #000000;
-      position: relative;
-      overflow: hidden;
-    }
-    .ncaf-intro-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to bottom, transparent 20%, rgba(0,0,0,0.93) 100%);
-      z-index: 1; opacity: 0.82; transition: opacity 0.4s;
-    }
-    .project-card.ncaf-intro:hover .ncaf-intro-overlay { opacity: 0.55; }
-    .ncaf-intro-badge {
-      position: absolute; top: 16px; left: 16px;
-      background: rgba(0,0,0,0.75);
-      border: 1px solid rgba(255,60,60,0.45);
-      padding: 5px 10px; z-index: 2;
-      font-family: 'Space Mono', monospace;
-      font-size: 9px; color: #ff3c3c;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      display: flex; align-items: center; gap: 6px;
-    }
-    .project-card.ncaf-intro .proj-tag-glitch {
-      color: #ff3c3c;
-      background: rgba(255,60,60,0.1);
-      border: 1px solid rgba(255,60,60,0.25);
-    }
-    .project-card.ncaf-intro .proj-tag-rgb {
-      color: #00e5ff;
-      background: rgba(0,229,255,0.1);
-      border: 1px solid rgba(0,229,255,0.25);
-    }
-    .project-card.ncaf-intro .proj-org { color: #ff3c3c; opacity: 0.8; }
-    .ncaf-scanlines {
-      position: absolute; inset: 0;
-      background: repeating-linear-gradient(
-        0deg, transparent, transparent 3px,
-        rgba(255,60,60,0.015) 3px, rgba(255,60,60,0.015) 4px
-      );
-      pointer-events: none; z-index: 2;
-    }
-    .ncaf-intro-glow {
-      position: absolute; bottom: -60px; left: -60px;
-      width: 280px; height: 280px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,30,30,0.18) 0%, rgba(0,229,255,0.08) 50%, transparent 70%);
-      pointer-events: none; z-index: 1;
-    }
-
-    /* ── NCAF OUTRO CARD ── */
-    .project-card.ncaf-outro {
-      background: #f0ede8;
-      position: relative;
-      overflow: hidden;
-    }
-    .ncaf-outro-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to bottom, transparent 15%, rgba(240,237,232,0.94) 100%);
-      z-index: 1; opacity: 0.85; transition: opacity 0.4s;
-    }
-    .project-card.ncaf-outro:hover .ncaf-outro-overlay { opacity: 0.55; }
-    .ncaf-outro-badge {
-      position: absolute; top: 16px; left: 16px;
-      background: rgba(255,255,255,0.85);
-      border: 1px solid rgba(106,168,79,0.45);
-      padding: 5px 10px; z-index: 2;
-      font-family: 'Space Mono', monospace;
-      font-size: 9px; color: #4a8c3f;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      display: flex; align-items: center; gap: 6px;
-    }
-    .project-card.ncaf-outro .proj-name { color: #1a2e1a; }
-    .project-card.ncaf-outro .proj-desc { color: #4a5a48; }
-    .project-card.ncaf-outro .proj-org { color: #c97b2a; }
-    .project-card.ncaf-outro .proj-tag-arts {
-      color: #7432af;
-      background: rgba(116,50,175,0.1);
-      border: 1px solid rgba(116,50,175,0.25);
-    }
-    .project-card.ncaf-outro .proj-tag-festival {
-      color: #c97b2a;
-      background: rgba(201,123,42,0.1);
-      border: 1px solid rgba(201,123,42,0.25);
-    }
-    .ncaf-outro-dots {
-      position: absolute; inset: 0;
-      pointer-events: none; z-index: 1; overflow: hidden;
-    }
-    .ncaf-outro-dots::before {
-      content: '';
-      position: absolute; top: 10px; right: 20px;
-      width: 8px; height: 8px; border-radius: 50%;
-      background: rgba(116,50,175,0.25);
-      box-shadow:
-        30px 15px 0 rgba(201,123,42,0.2),
-        -20px 40px 0 rgba(74,140,63,0.2),
-        50px 50px 0 rgba(220,60,60,0.15),
-        10px 80px 0 rgba(0,120,200,0.15);
-    }
-    .ncaf-outro-glow {
-      position: absolute; top: -80px; right: -80px;
-      width: 300px; height: 300px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(201,123,42,0.12) 0%, rgba(116,50,175,0.06) 50%, transparent 70%);
-      pointer-events: none; z-index: 1;
-    }
-    .project-card.ncaf-outro .proj-arrow {
-      border-color: rgba(116,50,175,0.3);
-      color: #7432af;
-    }
-
-    /* ============================================================
-       MOBILE-SPECIFIC FIXES
-       ============================================================ */
-    @media (max-width: 768px) {
-
-      /* --- NAV --- */
-      nav { padding: 12px 16px; }
-      .nav-links { gap: 14px; }
-      .nav-links a { font-size: 11px; letter-spacing: 0.08em; }
-
-      /* --- HERO --- */
-      #hero {
-        grid-template-columns: 1fr;
-        padding: 88px 20px 56px;
-        gap: 36px;
-      }
-      .hero-illustration { order: -1; }
-      .illus-frame { width: 200px; margin: 0 auto; }
-      .illus-label { font-size: 8px; }
-      .hero-tag { font-size: 10px; padding: 5px 10px; margin-bottom: 20px; }
-      h1.hero-name { font-size: clamp(40px, 12vw, 64px); }
-      .hero-sub { font-size: 11px; margin: 16px 0 28px; }
-      .hero-roles { gap: 6px; margin-bottom: 28px; }
-      .role-pill { font-size: 9px; padding: 5px 10px; }
-      .hero-cta { flex-direction: column; gap: 10px; }
-      .btn-primary, .btn-secondary { text-align: center; padding: 12px 20px; font-size: 11px; }
-      .scroll-ind { left: 20px; bottom: 20px; font-size: 9px; }
-
-      /* --- STATS BAR --- */
-      .stats-bar { flex-wrap: wrap; }
-      .stat-item { flex: 1 1 50%; padding: 20px 16px; border-right: none; border-bottom: 1px solid var(--border); }
-      .stat-item:nth-child(odd) { border-right: 1px solid var(--border); }
-      .stat-item:last-child { border-bottom: none; }
-      .stat-num { font-size: 32px; }
-      .stat-label { font-size: 9px; }
-
-      /* --- SECTIONS GENERAL --- */
-      #projects { padding: 56px 16px; }
-      .section-title { font-size: clamp(26px, 8vw, 38px); }
-      .section-num { font-size: 10px; }
-      .section-header { gap: 12px; margin-bottom: 32px; }
-      .work-category { margin-bottom: 14px; }
-      .cat-label { font-size: 9px; }
-
-      /* --- PROJECT GRID --- */
-      .projects-grid { grid-template-columns: 1fr; gap: 8px; }
-      .project-card { min-height: 320px; }
-      .project-card.featured { grid-column: span 1; min-height: 340px; }
-      .proj-name { font-size: 18px; }
-      .proj-desc { font-size: 10px; line-height: 1.6; }
-      .proj-org { font-size: 9px; }
-      .proj-content { padding: 20px 18px; }
-      .proj-tag { font-size: 8px; padding: 2px 6px; }
-      .proj-cta { font-size: 9px; margin-top: 10px; }
-
-      /* --- LAKBAYGO MOBILE FIX --- */
-      .project-card.lakbay {
-        min-height: 380px;
-        display: flex;
-        flex-direction: column;
-      }
-      /* On mobile: image fills top portion */
-      .lakbay-img-wrap {
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-      }
-      /* Override desktop gradient — fade from top on mobile */
-      .lakbay-img-wrap::before {
-        background: linear-gradient(to bottom, rgba(26,8,50,0.2) 0%, rgba(26,8,50,0.85) 65%, #1a0832 100%);
-      }
-      .lakbay-img-wrap img {
-        object-position: center center;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      /* Content panel goes full-width at bottom */
-      .lakbay-panel {
-        position: absolute;
-        bottom: 0; left: 0; right: 0;
-        width: 100%;
-        padding: 20px 18px 24px;
-        z-index: 4;
-        background: linear-gradient(to top, #1a0832 60%, transparent);
-      }
-      .lakbay-badge-row { margin-bottom: 10px; }
-      .project-card.lakbay .proj-desc { font-size: 10px; line-height: 1.55; max-width: 100%; }
-      .project-card.lakbay .proj-name { font-size: 20px; }
-
-      /* --- MOTION CARDS --- */
-      .motion-grid { grid-template-columns: 1fr !important; gap: 8px; }
-      .motion-card { grid-column: span 1 !important; min-height: 280px; }
-      .proj-video-badge { font-size: 8px; top: 10px; left: 10px; }
-      .ncaf-intro-badge, .ncaf-outro-badge { font-size: 8px; top: 10px; left: 10px; }
-
-      /* --- E-LOCATE MOBILE FIX --- */
-      .project-card.elocate {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto 300px;
-        min-height: unset;
-      }
-      .elocate-content-panel {
-        padding: 20px 18px;
-        justify-content: flex-start;
-      }
-      .elocate-content-panel::after { display: none; }
-      .elocate-screens { min-height: 300px; }
-      .elocate-slide img { max-height: 80%; max-width: 80%; }
-
-      /* --- ILLUSTRATION GRID --- */
-      .illus-grid { grid-template-columns: 1fr !important; gap: 8px; }
-      .illus-card, .illus-info-card { grid-column: span 1 !important; min-height: 280px; }
-      .illus-info-content { padding: 28px 20px; }
-      .illus-quote { font-size: 14px; padding-left: 14px; margin-bottom: 20px; }
-      .illus-desc { font-size: 11px; }
-      .tool-pill { font-size: 9px; padding: 5px 10px; }
-
-      /* --- ABOUT SECTION --- */
-      #about { padding: 56px 16px; }
-      .about-grid { grid-template-columns: 1fr; gap: 32px; }
-      .about-photo { max-width: 260px; }
-      .about-photo-border { display: none; }
-      .about-badge { max-width: 100%; }
-      .about-intro { font-size: 14px; line-height: 1.7; margin-bottom: 18px; }
-      .skills-list { grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 20px; }
-      .skill-item { font-size: 10px; padding: 8px 10px; }
-
-      /* --- CONTACT --- */
-      #contact { padding: 64px 16px; }
-      .contact-heading { font-size: clamp(32px, 11vw, 56px); }
-      .contact-sub { font-size: 11px; margin-bottom: 36px; }
-      .contact-links { flex-direction: column; align-items: stretch; gap: 10px; }
-      .contact-link { justify-content: center; padding: 12px 20px; font-size: 11px; }
-
-      /* --- FOOTER --- */
-      footer { padding: 18px 16px; flex-direction: column; gap: 6px; text-align: center; font-size: 10px; }
-
-      /* --- WORK CATEGORY SPACING --- */
-      .work-category { margin-top: 40px !important; }
-
-      /* --- MODAL MOBILE --- */
-      .modal-box { padding: 28px 20px; margin: 16px; width: calc(100% - 32px); }
-      .modal-title { font-size: 24px; }
-    }
-
-    /* Medium tablets 769-1100px */
-    @media (min-width: 769px) and (max-width: 1100px) {
-      nav { padding: 14px 28px; }
-      #hero { padding: 100px 28px 70px; gap: 32px; }
-      #projects { padding: 70px 28px; }
-      #about { padding: 70px 28px; }
-      #contact { padding: 80px 28px; }
-      footer { padding: 22px 28px; }
-
-      .motion-grid { grid-template-columns: 1fr 1fr !important; }
-      .motion-card { grid-column: span 1 !important; }
-      /* Last NCAF card on its own row centered */
-      .motion-grid .motion-card:nth-child(5) { grid-column: 1 / -1 !important; max-width: 50%; margin: 0 auto; }
-
-      .project-card.elocate {
-        grid-template-columns: 44% 56%;
-      }
-
-      .lakbay-panel { width: 55%; }
-    }
-    /* ── CONTACT LINK AS BUTTON ── */
-    .contact-link-btn {
-      font-family: 'Syne', sans-serif;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      cursor: none;
-    }
-
-    /* ── EMAIL MODAL ── */
-    .modal-backdrop {
-      position: fixed; inset: 0; z-index: 9000;
-      background: rgba(3,5,8,0.82);
-      backdrop-filter: blur(12px);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-    .modal-backdrop.open {
-      opacity: 1; pointer-events: all;
-    }
-    .modal-box {
-      background: var(--surface);
-      border: 1px solid rgba(74,240,196,0.2);
-      padding: 40px 44px;
-      width: 100%; max-width: 520px;
-      position: relative;
-      transform: translateY(20px);
-      transition: transform 0.35s cubic-bezier(.25,.46,.45,.94);
-      box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(74,240,196,0.05);
-    }
-    .modal-backdrop.open .modal-box {
-      transform: translateY(0);
-    }
-    .modal-close {
-      position: absolute; top: 16px; right: 16px;
-      background: none; border: 1px solid var(--border);
-      color: var(--muted); width: 30px; height: 30px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 12px; cursor: pointer;
-      transition: all 0.2s;
-    }
-    .modal-close:hover { border-color: var(--accent); color: var(--accent); }
-    .modal-eyebrow {
-      font-family: 'Space Mono', monospace;
-      font-size: 9px; color: var(--accent);
-      letter-spacing: 0.2em; text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    .modal-title {
-      font-size: 30px; font-weight: 800;
-      letter-spacing: -0.02em; margin-bottom: 6px; color: var(--text);
-    }
-    .modal-to {
-      font-family: 'Space Mono', monospace;
-      font-size: 10px; color: var(--muted);
-      margin-bottom: 24px; letter-spacing: 0.05em;
-    }
-    .modal-to span { color: var(--accent); }
-    .modal-field {
-      margin-bottom: 16px;
-    }
-    .modal-field label {
-      display: block;
-      font-family: 'Space Mono', monospace;
-      font-size: 9px; color: var(--muted);
-      letter-spacing: 0.15em; text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-    .modal-field input,
-    .modal-field textarea {
-      width: 100%;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-family: 'Space Mono', monospace;
-      font-size: 12px;
-      padding: 10px 14px;
-      outline: none;
-      transition: border-color 0.2s;
-      resize: vertical;
-    }
-    .modal-field input:focus,
-    .modal-field textarea:focus {
-      border-color: rgba(74,240,196,0.4);
-    }
-    .modal-field input::placeholder,
-    .modal-field textarea::placeholder { color: var(--muted); opacity: 0.5; }
-    .modal-send {
-      display: flex; align-items: center; gap: 10px;
-      margin-top: 20px; width: 100%;
-      justify-content: center;
-      padding: 13px 20px;
-      background: var(--accent); color: var(--bg);
-      border: none; cursor: pointer;
-      font-family: 'Syne', sans-serif;
-      font-size: 12px; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      transition: all 0.25s;
-    }
-    .modal-send:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(74,240,196,0.3); }
-    .modal-note {
-      font-family: 'Space Mono', monospace;
-      font-size: 9px; color: var(--muted);
-      text-align: center; margin-top: 12px;
-      line-height: 1.6; opacity: 0.7;
-    }
-  </style>
 </head>
 <body>
 
@@ -411,7 +29,7 @@
     <div class="hero-glow hero-glow-2"></div>
     <div class="hero-glow hero-glow-3"></div>
     <div class="hero-content">
-      <div class="hero-tag">Iloilo, Philippines · Freelancer · Designer · Developer </div>
+      <div class="hero-tag">Cebu, Philippines · Freelancer</div>
       <h1 class="hero-name">
         <span class="first">Arvin</span>
         <span class="last">Bearneza</span>
@@ -468,7 +86,7 @@
   <section id="projects">
     <div class="section-header reveal">
       <div class="section-num">01 /</div>
-      <h2 class="section-title">Works</h2>
+      <h2 class="section-title">Selected Work</h2>
       <div class="section-line"></div>
     </div>
 
@@ -501,12 +119,54 @@
       </div>
     </div>
 
+    <!-- DAKKUTEK + AETHER -->
+    <div class="projects-grid branding-grid" style="margin-top:2px">
+
+      <!-- DAKKUTEK ITS -->
+      <div class="project-card brand-card dakkutek reveal">
+        <div class="brand-img-wrap">
+          <img src="assets/dakkutek-brand.png" alt="Dakkutek ITS Brand Board"/>
+        </div>
+        <div class="brand-scrim dakkutek-scrim"></div>
+        <div class="proj-arrow">↗</div>
+        <div class="proj-content">
+          <div class="proj-tags">
+            <span class="proj-tag dkt-tag">Branding</span>
+            <span class="proj-tag dkt-tag">SaaS</span>
+            <span class="proj-tag dkt-tag">Visual Identity</span>
+          </div>
+          <div class="proj-name">Dakkutek ITS</div>
+          <div class="proj-desc">Brand identity for a cloud, cybersecurity, and managed IT services company — logo system, dual typeface pairing (Deltha + Ragick), and a gold/red/white palette evoking precision and trust.</div>
+          <div class="proj-org">IT Solutions · SaaS Platform</div>
+        </div>
+      </div>
+
+      <!-- AETHER -->
+      <div class="project-card brand-card aether reveal">
+        <div class="brand-img-wrap">
+          <img src="assets/aether-brand.png" alt="AETHER Branding"/>
+        </div>
+        <div class="brand-scrim aether-scrim"></div>
+        <div class="proj-arrow aether-arrow">↗</div>
+        <div class="proj-content">
+          <div class="proj-tags">
+            <span class="proj-tag aether-tag">Branding</span>
+            <span class="proj-tag aether-tag">AI System</span>
+            <span class="proj-tag aether-tag">Hackathon</span>
+          </div>
+          <div class="proj-name">AETHER</div>
+          <div class="proj-desc">Brand identity for an AI-driven satellite decision-support system for mangrove conservation in Western Visayas — geometric mark symbolising intelligence, nature, and data. Developed for a national hackathon.</div>
+          <div class="proj-org aether-org">National Hackathon · WVSU · Environmental Tech</div>
+        </div>
+      </div>
+
+    </div>
+
     <!-- MOTION -->
     <div class="work-category reveal" style="margin-top:60px;">
       <div class="cat-label"><span class="cat-dot cat-dot-purple"></span>Motion Graphics &amp; Animation</div>
     </div>
     <div class="projects-grid motion-grid">
-
       <div class="project-card motion-card reveal">
         <div class="proj-img-overlay motion-overlay"></div>
         <video class="proj-video" autoplay muted loop playsinline>
@@ -521,7 +181,6 @@
           <div class="proj-org">West Visayas State University · Link.exe</div>
         </div>
       </div>
-
       <div class="project-card motion-card reveal">
         <div class="proj-img-overlay motion-overlay"></div>
         <video class="proj-video" autoplay muted loop playsinline>
@@ -536,7 +195,6 @@
           <div class="proj-org">West Visayas State University · Link.exe</div>
         </div>
       </div>
-
       <div class="project-card motion-card reveal">
         <div class="proj-img-overlay motion-overlay"></div>
         <video class="proj-video" autoplay muted loop playsinline>
@@ -551,49 +209,6 @@
           <div class="proj-org">West Visayas State University</div>
         </div>
       </div>
-
-      <!-- ── NCAF INTRO ── fixed: mp4 instead of mov -->
-      <div class="project-card motion-card ncaf-intro reveal">
-        <div class="ncaf-scanlines"></div>
-        <div class="ncaf-intro-glow"></div>
-        <div class="ncaf-intro-overlay"></div>
-        <video class="proj-video" autoplay muted loop playsinline>
-          <source src="assets/ncaf_intro.mp4" type="video/mp4"/>
-        </video>
-        <div class="ncaf-intro-badge"><span class="play-icon">▶</span> Intro</div>
-        <div class="proj-arrow">↗</div>
-        <div class="proj-content">
-          <div class="proj-tags">
-            <span class="proj-tag proj-tag-glitch">Logo Animation</span>
-            <span class="proj-tag proj-tag-rgb">Glitch FX</span>
-          </div>
-          <div class="proj-name">NCAF 2026 Intro</div>
-          <div class="proj-desc">Logo intro animation for NCAF 2026: Pagsaulog — held at West Visayas State University. A high-energy chromatic glitch reveal that opens the arts festival with raw cinematic tension.</div>
-          <div class="proj-org">West Visayas State University · NCAF</div>
-        </div>
-      </div>
-
-      <!-- ── NCAF OUTRO ── fixed: mp4 -->
-      <div class="project-card motion-card ncaf-outro reveal">
-        <div class="ncaf-outro-glow"></div>
-        <div class="ncaf-outro-dots"></div>
-        <div class="ncaf-outro-overlay"></div>
-        <video class="proj-video" autoplay muted loop playsinline>
-          <source src="assets/ncaf_outro.mp4" type="video/mp4"/>
-        </video>
-        <div class="ncaf-outro-badge"><span class="play-icon">▶</span> Outro</div>
-        <div class="proj-arrow">↗</div>
-        <div class="proj-content">
-          <div class="proj-tags">
-            <span class="proj-tag proj-tag-arts">Arts Festival</span>
-            <span class="proj-tag proj-tag-festival">Event Branding</span>
-          </div>
-          <div class="proj-name">NCAF 2026 Outro</div>
-          <div class="proj-desc">Animated outro for NCAF 2026: Pagsaulog — a vibrant close sequence built around the illustrated festival logo, celebrating arts, music, theater, and culture at WVSU.</div>
-          <div class="proj-org">West Visayas State University · NCAF</div>
-        </div>
-      </div>
-
     </div>
 
     <!-- UI/UX -->
@@ -602,6 +217,7 @@
     </div>
     <div class="projects-grid">
       <div class="project-card featured elocate reveal">
+        <!-- Left: content -->
         <div class="elocate-content-panel">
           <div class="proj-featured-badge orange">UI/UX · Vendor App</div>
           <div class="proj-content">
@@ -615,6 +231,7 @@
             <a href="https://www.figma.com/proto/xXjw20v2jChFkCmhkmDLKR/PANUBLES-Web-Prototype?node-id=443-1924&starting-point-node-id=437%3A937&t=p6oABbOejUME2LFg-1" target="_blank" class="proj-cta orange-cta">View Prototype ↗</a>
           </div>
         </div>
+        <!-- Right: phone crossfade carousel -->
         <div class="elocate-screens">
           <div class="elocate-slide active" data-index="0">
             <img src="assets/elocate-stall-manager-nobg.png" alt="Stall Profile Manager"/>
@@ -627,6 +244,9 @@
           </div>
           <div class="elocate-slide" data-index="3">
             <img src="assets/elocate-qr-nobg.png" alt="Stall QR Code"/>
+          </div>
+          <div class="elocate-slide" data-index="4">
+            <img src="assets/elocate-compliance-nobg.png" alt="Document Repository"/>
           </div>
           <div class="elocate-dots">
             <span class="edot active" data-dot="0"></span>
@@ -693,12 +313,13 @@
           <div class="badge-dot"></div>
           <div>
             <div class="badge-name">Arvin Bearneza</div>
-            <div class="badge-loc">Iloilo · Philippines</div>
+            <div class="badge-loc">Cebu · Philippines</div>
           </div>
         </div>
       </div>
       <div class="about-text reveal">
-        <p class="about-intro">Hi! I'm <strong>Arvin</strong> — a Computer Science college student and freelancer based in Iloilo, Philippines. I live at the intersection of <strong>design and technology</strong>, building brands and digital products that feel alive.</p>
+        <p class="about-intro">Hi! I'm <strong>Arvin</strong> — a college student and freelancer based in Cebu, Philippines. I live at the intersection of <strong>design and technology</strong>, building brands and digital products that feel alive.</p>
+        <p class="about-intro">I've worked on real-world projects including the complete brand identity for <strong>LakbayGO</strong>, motion graphics for <strong>West Visayas State University</strong> events, LED wall visuals, UI/UX for a digital tourism platform, and personal illustration work.</p>
         <p class="about-intro">Whether it's crafting a cohesive <strong>visual identity</strong>, designing a seamless <strong>user experience</strong>, animating ideas into <strong>motion</strong>, or shipping it in <strong>code</strong> — I do it all.</p>
         <div class="skills-list">
           <div class="skill-item"><div class="skill-dot"></div>UI/UX Design</div>
@@ -714,64 +335,28 @@
     </div>
   </section>
 
-  <!-- ── EMAIL MODAL ── -->
-  <div id="email-modal" class="modal-backdrop" aria-hidden="true">
-    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-      <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
-      <div class="modal-eyebrow">Send a Message</div>
-      <h3 class="modal-title" id="modal-title">Let's talk.</h3>
-      <p class="modal-to">To: <span>arvinbearneza77@gmail.com</span></p>
-      <div class="modal-field">
-        <label for="msg-name">Your Name</label>
-        <input type="text" id="msg-name" placeholder="e.g. Juan dela Cruz" autocomplete="off"/>
-      </div>
-      <div class="modal-field">
-        <label for="msg-subject">Subject</label>
-        <input type="text" id="msg-subject" placeholder="e.g. Project Collab" autocomplete="off"/>
-      </div>
-      <div class="modal-field">
-        <label for="msg-body">Message</label>
-        <textarea id="msg-body" rows="5" placeholder="Tell me about your project..."></textarea>
-      </div>
-      <button class="modal-send" id="modal-send">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        Open in Mail App
-      </button>
-      <p class="modal-note">Opens your default mail app pre-filled — nothing is sent from this page.</p>
-    </div>
-  </div>
-
   <section id="contact">
     <div class="contact-inner">
       <div class="contact-eyebrow reveal">03 / Let's Connect</div>
       <h2 class="contact-heading reveal">Got a project<br/><span class="outline">in mind?</span></h2>
       <p class="contact-sub reveal">I'm open to freelance projects, collaborations,<br/>and creative opportunities. Let's build something great.</p>
       <div class="contact-links reveal">
-
-        <!-- Email — opens modal -->
-        <button class="contact-link contact-link-btn" id="open-email-modal">
+        <a href="mailto:arvinbearneza@gmail.com" class="contact-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
           Email Me
-        </button>
-
-        <!-- LinkedIn -->
-        <a href="https://www.linkedin.com/in/arvin-bearneza-810805330/" target="_blank" rel="noopener noreferrer" class="contact-link">
+        </a>
+        <a href="#" class="contact-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
           LinkedIn
         </a>
-
-        <!-- GitHub -->
-        <a href="https://github.com/Rvn2006" target="_blank" rel="noopener noreferrer" class="contact-link">
+        <a href="#" class="contact-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
           GitHub
         </a>
-
-        <!-- Instagram -->
-        <a href="https://www.instagram.com/klem666_/" target="_blank" rel="noopener noreferrer" class="contact-link">
+        <a href="#" class="contact-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="3"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
           Instagram
         </a>
-
       </div>
     </div>
   </section>
@@ -791,10 +376,10 @@
 
       function goTo(n) {
         slides[cur].classList.remove('active');
-        dots[cur] && dots[cur].classList.remove('active');
+        dots[cur].classList.remove('active');
         cur = ((n % slides.length) + slides.length) % slides.length;
         slides[cur].classList.add('active');
-        dots[cur] && dots[cur].classList.add('active');
+        dots[cur].classList.add('active');
       }
 
       dots.forEach(function(d, i) {
@@ -803,56 +388,6 @@
 
       setInterval(function() { goTo(cur + 1); }, 3000);
     });
-  </script>
-  <script>
-    // ── EMAIL MODAL ──
-    (function() {
-      var modal     = document.getElementById('email-modal');
-      var openBtn   = document.getElementById('open-email-modal');
-      var closeBtn  = document.getElementById('modal-close');
-      var sendBtn   = document.getElementById('modal-send');
-      var nameEl    = document.getElementById('msg-name');
-      var subjectEl = document.getElementById('msg-subject');
-      var bodyEl    = document.getElementById('msg-body');
-      var TO        = 'arvinbearneza77@gmail.com';
-
-      function openModal() {
-        modal.classList.add('open');
-        modal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-        nameEl.focus();
-      }
-      function closeModal() {
-        modal.classList.remove('open');
-        modal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-      }
-
-      openBtn  && openBtn.addEventListener('click', openModal);
-      closeBtn && closeBtn.addEventListener('click', closeModal);
-
-      // Close on backdrop click
-      modal && modal.addEventListener('click', function(e) {
-        if (e.target === modal) closeModal();
-      });
-
-      // Close on Escape
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
-      });
-
-      // Build mailto and open mail app
-      sendBtn && sendBtn.addEventListener('click', function() {
-        var name    = (nameEl.value.trim()    || 'A Visitor');
-        var subject = (subjectEl.value.trim() || 'Portfolio Inquiry');
-        var body    = bodyEl.value.trim() || '';
-        var fullBody = 'Hi Arvin,\n\n' + body + '\n\n— ' + name;
-        var mailto = 'mailto:' + TO
-          + '?subject=' + encodeURIComponent(subject)
-          + '&body='    + encodeURIComponent(fullBody);
-        window.location.href = mailto;
-      });
-    })();
   </script>
 </body>
 </html>
