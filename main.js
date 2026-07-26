@@ -37,29 +37,35 @@ if (navBurger && mobileMenu) {
 const cursor     = document.getElementById('cursor');
 const cursorRing = document.getElementById('cursor-ring');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
 let mouseX = 0, mouseY = 0;
 let ringX  = 0, ringY  = 0;
 
-document.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-  cursor.style.left = mouseX + 'px';
-  cursor.style.top  = mouseY + 'px';
-  if (prefersReducedMotion) {
-    cursorRing.style.left = mouseX + 'px';
-    cursorRing.style.top  = mouseY + 'px';
-  }
-});
+/* Skip the custom cursor entirely on touch devices — with no pointer to
+   follow it would just sit in the top-left corner, and the rAF loop would
+   run forever for nothing. */
+if (canHover) {
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top  = mouseY + 'px';
+    if (prefersReducedMotion) {
+      cursorRing.style.left = mouseX + 'px';
+      cursorRing.style.top  = mouseY + 'px';
+    }
+  });
 
-if (!prefersReducedMotion) {
-  (function animateRing() {
-    ringX += (mouseX - ringX) * 0.12;
-    ringY += (mouseY - ringY) * 0.12;
-    cursorRing.style.left = ringX + 'px';
-    cursorRing.style.top  = ringY + 'px';
-    requestAnimationFrame(animateRing);
-  })();
+  if (!prefersReducedMotion) {
+    (function animateRing() {
+      ringX += (mouseX - ringX) * 0.12;
+      ringY += (mouseY - ringY) * 0.12;
+      cursorRing.style.left = ringX + 'px';
+      cursorRing.style.top  = ringY + 'px';
+      requestAnimationFrame(animateRing);
+    })();
+  }
 }
 
 /* ------------------------------------------------------------
@@ -67,8 +73,6 @@ if (!prefersReducedMotion) {
    Lives behind each section's content (negative z-index in CSS) —
    tracks the pointer relative to whichever section is hovered.
    ------------------------------------------------------------ */
-const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
 if (canHover && !prefersReducedMotion) {
   let glowSection = null;
 
@@ -91,18 +95,20 @@ if (canHover && !prefersReducedMotion) {
   });
 }
 
-document.querySelectorAll('a, button, .project-card, .skill-item, .role-pill').forEach((el) => {
-  el.addEventListener('mouseenter', () => {
-    cursor.style.transform     = 'translate(-50%,-50%) scale(2.5)';
-    cursorRing.style.transform = 'translate(-50%,-50%) scale(1.5)';
-    cursorRing.style.borderColor = 'var(--accent2)';
+if (canHover) {
+  document.querySelectorAll('a, button, .project-card, .skill-item, .role-pill').forEach((el) => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform     = 'translate(-50%,-50%) scale(2.5)';
+      cursorRing.style.transform = 'translate(-50%,-50%) scale(1.5)';
+      cursorRing.style.borderColor = 'var(--accent2)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform     = 'translate(-50%,-50%) scale(1)';
+      cursorRing.style.transform = 'translate(-50%,-50%) scale(1)';
+      cursorRing.style.borderColor = 'var(--accent)';
+    });
   });
-  el.addEventListener('mouseleave', () => {
-    cursor.style.transform     = 'translate(-50%,-50%) scale(1)';
-    cursorRing.style.transform = 'translate(-50%,-50%) scale(1)';
-    cursorRing.style.borderColor = 'var(--accent)';
-  });
-});
+}
 
 /* ------------------------------------------------------------
    1c. 3D TILT — project cards track the pointer in perspective,
@@ -123,6 +129,32 @@ if (canHover && !prefersReducedMotion) {
     card.addEventListener('mouseleave', () => {
       card.style.transform = '';
     });
+  });
+}
+
+/* ------------------------------------------------------------
+   1d. TOUCH FEEDBACK — on touch devices there's no hover, so the
+   card effects are triggered by the tap itself. The glare is
+   centred on wherever the finger actually landed.
+   ------------------------------------------------------------ */
+if (!canHover) {
+  document.querySelectorAll('.project-card').forEach((card) => {
+    const release = () => card.classList.remove('is-touched');
+
+    card.addEventListener('touchstart', (e) => {
+      const touch = e.touches[0];
+      if (touch) {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--cx', ((touch.clientX - rect.left) / rect.width * 100) + '%');
+        card.style.setProperty('--cy', ((touch.clientY - rect.top) / rect.height * 100) + '%');
+      }
+      card.classList.add('is-touched');
+    }, { passive: true });
+
+    card.addEventListener('touchend', release, { passive: true });
+    card.addEventListener('touchcancel', release, { passive: true });
+    // A scroll that starts on a card shouldn't leave it stuck in the lit state.
+    card.addEventListener('touchmove', release, { passive: true });
   });
 }
 

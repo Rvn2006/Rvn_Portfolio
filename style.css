@@ -88,6 +88,20 @@ body::after {
   opacity: 0.5;
 }
 
+/* Touch devices — no custom cursor at all (it otherwise parks itself in the
+   top-left corner, since there's no pointer to follow). Restore native
+   cursors so taps behave normally; feedback comes from .is-touched instead. */
+@media (hover: none), (pointer: coarse) {
+  #cursor, #cursor-ring { display: none; }
+  body { cursor: auto; }
+  a, button,
+  .project-card, .brand-card, .skill-item, .role-pill,
+  .btn-primary, .btn-secondary, .contact-link,
+  .nav-links a, .nav-burger, .edot, .proj-cta {
+    cursor: pointer;
+  }
+}
+
 /* ------------------------------------------------------------
    5. NAVIGATION
    ------------------------------------------------------------ */
@@ -480,9 +494,14 @@ section::after {
   transform-style: preserve-3d;
   min-height: 400px;
 }
-.project-card:hover { border-color: rgba(74,240,196,0.3); }
-.project-card:hover .proj-img-overlay { opacity: 0.4; }
-.project-card:hover .proj-arrow { transform: translate(4px,-4px); opacity: 1; }
+/* `.is-touched` mirrors :hover — added on touchstart so tapping a card on a
+   phone gets the same feedback a pointer gets on desktop. */
+.project-card:hover,
+.project-card.is-touched { border-color: rgba(74,240,196,0.3); }
+.project-card:hover .proj-img-overlay,
+.project-card.is-touched .proj-img-overlay { opacity: 0.4; }
+.project-card:hover .proj-arrow,
+.project-card.is-touched .proj-arrow { transform: translate(4px,-4px); opacity: 1; }
 
 /* 3D tilt glare — a soft highlight that tracks the pointer, giving the tilt
    a glassy sense of depth. Sits above the image/overlay but below badges,
@@ -495,7 +514,8 @@ section::after {
   background: radial-gradient(circle 280px at var(--cx, 50%) var(--cy, 50%), rgba(255,255,255,0.16), transparent 60%);
   transition: opacity 0.3s ease;
 }
-.project-card:hover::before { opacity: 1; }
+.project-card:hover::before,
+.project-card.is-touched::before { opacity: 1; }
 
 .project-card.featured { grid-column: span 12; min-height: 420px; }
 
@@ -520,7 +540,8 @@ section::after {
   object-position: center top;
   transition: transform 0.7s cubic-bezier(.25,.46,.45,.94);
 }
-.project-card.lakbay:hover .lakbay-img-wrap img { transform: scale(1.04); }
+.project-card.lakbay:hover .lakbay-img-wrap img,
+.project-card.lakbay.is-touched .lakbay-img-wrap img { transform: scale(1.04); }
 /* Fade left edge into dark bg */
 .lakbay-img-wrap::before {
   content: '';
@@ -581,7 +602,8 @@ section::after {
   object-fit: cover;
   transition: transform 0.6s ease;
 }
-.project-card:hover .proj-video { transform: scale(1.03); }
+.project-card:hover .proj-video,
+.project-card.is-touched .proj-video { transform: scale(1.03); }
 
 .motion-overlay {
   position: absolute; inset: 0;
@@ -732,7 +754,8 @@ section::after {
   width: 100%; height: 100%; object-fit: cover; object-position: top;
   transition: transform 0.6s ease;
 }
-.project-card:hover .illus-hero-img { transform: scale(1.03); }
+.project-card:hover .illus-hero-img,
+.project-card.is-touched .illus-hero-img { transform: scale(1.03); }
 .illus-overlay {
   position: absolute; inset: 0;
   background: linear-gradient(to bottom, transparent 50%, rgba(3,5,8,0.9) 100%);
@@ -994,10 +1017,14 @@ footer span { color: var(--accent); }
   .nav-status { display: none; }
   .nav-burger { display: flex; }
 
-  #hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 48px; }
+  /* align-items:start — centering taller-than-viewport content pushed the
+     illustration (and its sticker) up underneath the fixed nav. */
+  #hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 48px; align-items: start; }
   .hero-illustration { order: -1; }
   .illus-frame { width: 240px; }
-  .hero-sticker { width: 150px; height: 150px; top: -46px; right: -46px; }
+  /* Offset accounts for the rotate+float animation expanding the visual box
+     ~20px past the layout box — otherwise the hair clips under the nav. */
+  .hero-sticker { width: 150px; height: 150px; top: -8px; right: -34px; }
   .scroll-ind { left: 24px; }
 
   .stats-bar { flex-wrap: wrap; }
@@ -1038,9 +1065,12 @@ footer span { color: var(--accent); }
   /* Same reasoning as LakbayGO/brand cards — stack instead of overlaying,
      so text legibility never depends on the illustration's brightness. */
   .illus-card { min-height: 0; }
+  /* The portrait is 516x716 — a fixed landscape height would crop the figure
+     off mid-torso, so let it render at its natural aspect instead. */
   .illus-hero-img {
     position: relative; inset: auto;
-    width: 100%; height: 260px;
+    width: 100%; height: auto;
+    display: block;
   }
   .illus-overlay { display: none; }
   .illus-card .proj-content {
@@ -1115,7 +1145,8 @@ footer span { color: var(--accent); }
   object-position: top center;
   transition: transform 0.7s cubic-bezier(.25,.46,.45,.94);
 }
-.project-card.brand-card:hover .brand-img-wrap img {
+.project-card.brand-card:hover .brand-img-wrap img,
+.project-card.brand-card.is-touched .brand-img-wrap img {
   transform: scale(1.04);
 }
 
@@ -1140,7 +1171,8 @@ footer span { color: var(--accent); }
     rgba(26,20,8,0.98) 100%
   );
 }
-.project-card.dakkutek:hover { border-color: rgba(193,163,95,0.4) !important; }
+.project-card.dakkutek:hover,
+.project-card.dakkutek.is-touched { border-color: rgba(193,163,95,0.4) !important; }
 
 .dkt-tag {
   color: #c1a35f !important;
@@ -1168,7 +1200,8 @@ footer span { color: var(--accent); }
     rgba(3,26,16,0.98) 100%
   );
 }
-.project-card.aether:hover { border-color: rgba(27,186,111,0.4) !important; }
+.project-card.aether:hover,
+.project-card.aether.is-touched { border-color: rgba(27,186,111,0.4) !important; }
 
 .aether-tag {
   color: #1bba6f !important;
