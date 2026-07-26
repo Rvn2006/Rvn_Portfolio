@@ -4,6 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Arvin Bearneza — Creative Developer</title>
+  <link rel="icon" href="assets/vinn-sticker.png" type="image/png"/>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
 </head>
@@ -22,14 +23,24 @@
     <div class="nav-status">
       <span class="status-dot"></span>Available
     </div>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#projects">Work</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <div class="mobile-menu-status"><span class="status-dot"></span>Available</div>
+  </div>
 
   <section id="hero">
     <div class="hero-glow hero-glow-1"></div>
     <div class="hero-glow hero-glow-2"></div>
     <div class="hero-glow hero-glow-3"></div>
     <div class="hero-content">
-      <div class="hero-tag">Cebu, Philippines · Freelancer</div>
+      <div class="hero-tag">Iloilo, Philippines · Freelancer</div>
       <h1 class="hero-name">
         <span class="first">Arvin</span>
         <span class="last">Bearneza</span>
@@ -53,8 +64,13 @@
     </div>
     <div class="hero-illustration">
       <div class="illus-frame">
-        <img src="assets/arvin-illustration.jpg" alt="Arvin — Self Portrait Illustration" class="illus-img"/>
-        <div class="illus-glow"></div>
+        <div class="illus-clip">
+          <img src="assets/arvin-illustration.jpg" alt="Arvin — Self Portrait Illustration" class="illus-img"/>
+          <div class="illus-glow"></div>
+        </div>
+        <div class="hero-sticker" aria-hidden="true">
+          <img src="assets/vinn-sticker.png" alt=""/>
+        </div>
       </div>
       <div class="illus-label">Self Portrait · Digital Illustration</div>
     </div>
@@ -163,7 +179,7 @@
     </div>
 
     <!-- MOTION -->
-    <div class="work-category reveal" style="margin-top:60px;">
+    <div class="work-category reveal cat-gap">
       <div class="cat-label"><span class="cat-dot cat-dot-purple"></span>Motion Graphics &amp; Animation</div>
     </div>
     <div class="projects-grid motion-grid">
@@ -209,10 +225,24 @@
           <div class="proj-org">West Visayas State University</div>
         </div>
       </div>
+      <div class="project-card motion-card ncaf reveal">
+        <div class="proj-img-overlay motion-overlay"></div>
+        <video class="proj-video" autoplay muted playsinline data-sequence="assets/ncaf_intro.mp4,assets/ncaf_outro.mp4">
+          <source src="assets/ncaf_intro.mp4" type="video/mp4"/>
+        </video>
+        <div class="proj-video-badge"><span class="play-icon">▶</span> Intro / Outro</div>
+        <div class="proj-arrow">↗</div>
+        <div class="proj-content">
+          <div class="proj-tags"><span class="proj-tag alt2">Motion Graphics</span><span class="proj-tag">Cultural Festival</span></div>
+          <div class="proj-name">NCAF</div>
+          <div class="proj-desc">Motion graphics intro and outro for the National Culture and Arts Festival (NCAF) — Iloilo's annual celebration of Ilonggo heritage, culture, and the arts.</div>
+          <div class="proj-org">Iloilo City · National Culture and Arts Festival</div>
+        </div>
+      </div>
     </div>
 
     <!-- UI/UX -->
-    <div class="work-category reveal" style="margin-top:60px;">
+    <div class="work-category reveal cat-gap">
       <div class="cat-label"><span class="cat-dot cat-dot-blue"></span>UI/UX Design</div>
     </div>
     <div class="projects-grid">
@@ -245,15 +275,11 @@
           <div class="elocate-slide" data-index="3">
             <img src="assets/elocate-qr-nobg.png" alt="Stall QR Code"/>
           </div>
-          <div class="elocate-slide" data-index="4">
-            <img src="assets/elocate-compliance-nobg.png" alt="Document Repository"/>
-          </div>
           <div class="elocate-dots">
             <span class="edot active" data-dot="0"></span>
             <span class="edot" data-dot="1"></span>
             <span class="edot" data-dot="2"></span>
             <span class="edot" data-dot="3"></span>
-            <span class="edot" data-dot="4"></span>
           </div>
         </div>
         <div class="proj-arrow">↗</div>
@@ -261,7 +287,7 @@
     </div>
 
     <!-- ILLUSTRATION -->
-    <div class="work-category reveal" style="margin-top:60px;">
+    <div class="work-category reveal cat-gap">
       <div class="cat-label"><span class="cat-dot cat-dot-pink"></span>Illustration</div>
     </div>
     <div class="projects-grid illus-grid">
@@ -283,9 +309,9 @@
         <div class="illus-info-content">
           <div class="illus-quote">"I draw before I design — it keeps the ideas raw and human."</div>
           <div class="illus-tools">
-            <div class="tool-pill">Adobe Photoshop</div>
-            <div class="tool-pill">Procreate</div>
-            <div class="tool-pill">Adobe Illustrator</div>
+            <div class="tool-pill reveal">Adobe Photoshop</div>
+            <div class="tool-pill reveal">Procreate</div>
+            <div class="tool-pill reveal">Adobe Illustrator</div>
           </div>
           <div class="illus-desc">Illustration is at the heart of everything I create — from brand mascots to editorial art to motion storyboards.</div>
         </div>
@@ -313,23 +339,22 @@
           <div class="badge-dot"></div>
           <div>
             <div class="badge-name">Arvin Bearneza</div>
-            <div class="badge-loc">Cebu · Philippines</div>
+            <div class="badge-loc">Iloilo · Philippines</div>
           </div>
         </div>
       </div>
       <div class="about-text reveal">
-        <p class="about-intro">Hi! I'm <strong>Arvin</strong> — a college student and freelancer based in Cebu, Philippines. I live at the intersection of <strong>design and technology</strong>, building brands and digital products that feel alive.</p>
-        <p class="about-intro">I've worked on real-world projects including the complete brand identity for <strong>LakbayGO</strong>, motion graphics for <strong>West Visayas State University</strong> events, LED wall visuals, UI/UX for a digital tourism platform, and personal illustration work.</p>
+        <p class="about-intro">Hi! I'm <strong>Arvin</strong> — a college student and freelancer based in Iloilo, Philippines. I live at the intersection of <strong>design and technology</strong>, building brands and digital products that feel alive.</p>
         <p class="about-intro">Whether it's crafting a cohesive <strong>visual identity</strong>, designing a seamless <strong>user experience</strong>, animating ideas into <strong>motion</strong>, or shipping it in <strong>code</strong> — I do it all.</p>
         <div class="skills-list">
-          <div class="skill-item"><div class="skill-dot"></div>UI/UX Design</div>
-          <div class="skill-item"><div class="skill-dot"></div>Motion Graphics</div>
-          <div class="skill-item"><div class="skill-dot"></div>Illustration</div>
-          <div class="skill-item"><div class="skill-dot"></div>Branding &amp; Identity</div>
-          <div class="skill-item"><div class="skill-dot"></div>2D Animation</div>
-          <div class="skill-item"><div class="skill-dot"></div>Front-End Dev</div>
-          <div class="skill-item"><div class="skill-dot"></div>Figma / Adobe CC</div>
-          <div class="skill-item"><div class="skill-dot"></div>React / HTML / CSS</div>
+          <div class="skill-item reveal"><div class="skill-dot"></div>UI/UX Design</div>
+          <div class="skill-item reveal"><div class="skill-dot"></div>Motion Graphics</div>
+          <div class="skill-item reveal"><div class="skill-dot"></div>Illustration</div>
+          <div class="skill-item reveal"><div class="skill-dot"></div>Branding &amp; Identity</div>
+          <div class="skill-item reveal"><div class="skill-dot"></div>2D Animation</div>
+          <div class="skill-item reveal"><div class="skill-dot"></div>Front-End Dev</div>
+          <div class="skill-item reveal"><div class="skill-dot"></div>Figma / Adobe CC</div>
+          <div class="skill-item reveal"><div class="skill-dot"></div>React / HTML / CSS</div>
         </div>
       </div>
     </div>
@@ -341,53 +366,27 @@
       <h2 class="contact-heading reveal">Got a project<br/><span class="outline">in mind?</span></h2>
       <p class="contact-sub reveal">I'm open to freelance projects, collaborations,<br/>and creative opportunities. Let's build something great.</p>
       <div class="contact-links reveal">
-        <a href="mailto:arvinbearneza@gmail.com" class="contact-link">
+        <a href="mailto:arvinbearneza77@gmail.com" class="contact-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
           Email Me
         </a>
-        <a href="#" class="contact-link">
+        <a href="https://www.linkedin.com/in/arvin-bearneza/" target="_blank" rel="noopener noreferrer" class="contact-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
           LinkedIn
         </a>
-        <a href="#" class="contact-link">
+        <a href="https://github.com/Rvn2006" target="_blank" rel="noopener noreferrer" class="contact-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
           GitHub
-        </a>
-        <a href="#" class="contact-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="3"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
-          Instagram
         </a>
       </div>
     </div>
   </section>
 
-  <footer>
+  <footer class="reveal">
     <div>© 2025 <span>Arvin Bearneza</span>. All rights reserved.</div>
     <div>Designed &amp; Built by <span>Arvin</span></div>
   </footer>
 
   <script src="main.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var slides = Array.from(document.querySelectorAll('.elocate-slide'));
-      var dots   = Array.from(document.querySelectorAll('.edot'));
-      if (!slides.length) return;
-      var cur = 0;
-
-      function goTo(n) {
-        slides[cur].classList.remove('active');
-        dots[cur].classList.remove('active');
-        cur = ((n % slides.length) + slides.length) % slides.length;
-        slides[cur].classList.add('active');
-        dots[cur].classList.add('active');
-      }
-
-      dots.forEach(function(d, i) {
-        d.addEventListener('click', function() { goTo(i); });
-      });
-
-      setInterval(function() { goTo(cur + 1); }, 3000);
-    });
-  </script>
 </body>
 </html>
