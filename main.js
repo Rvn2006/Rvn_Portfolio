@@ -279,6 +279,37 @@ document.querySelectorAll('.proj-video[data-sequence]').forEach((video) => {
   });
 });
 
+/* ------------------------------------------------------------
+   7c. SCREENSHOT CAROUSELS — crossfade through each system card's
+   captured front-end screens. Only runs while the card is on screen.
+   ------------------------------------------------------------ */
+document.querySelectorAll('.shot-stage').forEach((stage) => {
+  const shots = stage.querySelectorAll('.shot');
+  if (shots.length < 2) return;
+
+  let idx = 0;
+  let timer = null;
+
+  const advance = () => {
+    shots[idx].classList.remove('active');
+    idx = (idx + 1) % shots.length;
+    shots[idx].classList.add('active');
+  };
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting && !timer) {
+        timer = setInterval(advance, 3600);
+      } else if (!entry.isIntersecting && timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    });
+  }, { threshold: 0.25 });
+
+  obs.observe(stage);
+});
+
 const elocateSlides = document.querySelectorAll('.elocate-slide');
 const elocateDots   = document.querySelectorAll('.edot');
 

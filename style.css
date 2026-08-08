@@ -745,6 +745,103 @@ section::after {
 .elocate-overlay-grad { display: none; }
 .elocate-track        { display: none; }
 
+/* ── PRODUCT / SYSTEM INTERFACES (AETHER platform, LCIBMS) ──
+   These repos ship no UI screenshots, so each card leads with the product's
+   own mark on a branded panel and carries the detail in a structured spec
+   list — image-on-top / content-below, so it stacks cleanly at every width. */
+.systems-grid { grid-template-columns: 1fr 1fr !important; gap: 2px; }
+.system-card {
+  grid-column: span 1;
+  min-height: 0;
+  display: flex; flex-direction: column;
+  background: var(--surface);
+}
+/* Screenshot area — real captures of the running front-end, presented in a
+   light browser chrome so they read as product shots rather than raw images. */
+.system-shots {
+  position: relative; flex-shrink: 0;
+  padding: 26px 26px 0;
+  overflow: hidden;
+}
+.shot-frame {
+  border: 1px solid var(--border);
+  border-radius: 6px 6px 0 0;
+  overflow: hidden;
+  background: #0a0f18;
+  box-shadow: 0 -2px 40px rgba(0,0,0,0.5);
+  transition: transform 0.6s cubic-bezier(.25,.46,.45,.94);
+}
+.system-card:hover .shot-frame,
+.system-card.is-touched .shot-frame { transform: translateY(-4px); }
+.shot-bar {
+  display: flex; align-items: center; gap: 6px;
+  padding: 9px 12px;
+  background: rgba(255,255,255,0.04);
+  border-bottom: 1px solid var(--border);
+}
+.shot-bar span {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(255,255,255,0.16);
+}
+.shot-stage { position: relative; aspect-ratio: 16 / 10; }
+.shot-stage .shot {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: top center;
+  opacity: 0; transition: opacity 0.7s ease;
+}
+.shot-stage .shot.active { opacity: 1; }
+.system-card .proj-content {
+  position: relative; z-index: 3;
+  padding: 28px 32px 32px;
+  display: flex; flex-direction: column; flex: 1;
+}
+
+/* Spec list — label / value rows */
+.system-specs { list-style: none; margin: 18px 0 0; padding: 0; }
+.system-specs li {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; color: var(--muted);
+  line-height: 1.6; letter-spacing: 0.03em;
+  padding: 8px 0; border-top: 1px solid var(--border);
+}
+.system-specs li span {
+  display: block;
+  font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--text); opacity: 0.55; margin-bottom: 3px;
+}
+.system-specs li:last-child { margin-bottom: 0; }
+
+/* AETHER platform — green, matching its own brand */
+.system-card.aether-sys .system-shots {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(27,186,111,0.16) 0%, transparent 70%),
+    #06120d;
+}
+.system-card.aether-sys:hover,
+.system-card.aether-sys.is-touched { border-color: rgba(27,186,111,0.4) !important; }
+
+/* L&L Cafe — coffee brown / cream, matching the app's own palette */
+.system-card.lcibms .system-shots {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(169,130,88,0.22) 0%, transparent 70%),
+    #17120c;
+}
+.system-card.lcibms:hover,
+.system-card.lcibms.is-touched { border-color: rgba(169,130,88,0.45) !important; }
+.lcibms-tag {
+  color: #c9a274 !important;
+  background: rgba(169,130,88,0.1) !important;
+  border: 1px solid rgba(169,130,88,0.28) !important;
+}
+.lcibms-arrow { border-color: rgba(169,130,88,0.35) !important; color: #c9a274 !important; }
+
+@media (max-width: 760px) {
+  .systems-grid { grid-template-columns: 1fr !important; }
+  .system-shots { padding: 18px 18px 0; }
+  .system-card .proj-content { padding: 24px; }
+}
+
 /* ── ILLUSTRATION ── */
 .illus-grid { grid-template-columns: 5fr 7fr; gap: 2px; }
 .illus-card { grid-column: span 1; min-height: 500px; }
