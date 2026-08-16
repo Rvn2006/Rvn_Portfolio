@@ -97,7 +97,8 @@ body::after {
   a, button,
   .project-card, .brand-card, .skill-item, .role-pill,
   .btn-primary, .btn-secondary, .contact-link,
-  .nav-links a, .nav-burger, .edot, .proj-cta {
+  .nav-links a, .nav-burger, .edot, .proj-cta,
+  .pm-close, .pm-thumb, .pm-link {
     cursor: pointer;
   }
 }
@@ -458,16 +459,26 @@ section::after {
 .section-title { font-size: clamp(32px, 5vw, 52px); font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
 .section-line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); margin-left: 20px; }
 
-/* Work category label */
-.work-category { margin-bottom: var(--space-3); }
+/* Work category label — label on the left, project count on the right, with a
+   hairline running the full grid width so each category reads as one band. */
+.work-category {
+  margin-bottom: var(--space-3);
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+}
 .work-category.cat-gap { margin-top: var(--space-7); }
 .cat-label {
   display: inline-flex; align-items: center; gap: 10px;
   font-family: 'Space Mono', monospace;
   font-size: 10px; color: var(--muted);
   letter-spacing: 0.2em; text-transform: uppercase;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 8px;
+}
+.cat-count {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; color: var(--muted); opacity: 0.6;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  white-space: nowrap;
 }
 .cat-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
 .cat-dot-purple { background: var(--accent3); }
@@ -589,12 +600,11 @@ section::after {
   position: absolute; top: 24px; right: 24px; z-index: 5;
 }
 
-/* ── MOTION GRID ── */
-.motion-grid { grid-template-columns: repeat(3, 1fr); gap: 2px; }
+/* ── MOTION GRID ──
+   2×2 rather than 3+1: with four clips, a three-column grid orphans the
+   fourth on a row of its own with two empty cells beside it. */
+.motion-grid { grid-template-columns: repeat(2, 1fr); gap: 2px; }
 .motion-card { grid-column: span 1; min-height: 460px; }
-@media (min-width: 1101px) {
-  .motion-card.ncaf { grid-column: 2; }
-}
 
 .proj-video {
   position: absolute; inset: 0;
@@ -605,11 +615,20 @@ section::after {
 .project-card:hover .proj-video,
 .project-card.is-touched .proj-video { transform: scale(1.03); }
 
+/* Several of these clips have near-white frames (NCAF, Pag-iririmaw), and a
+   scrim that only starts darkening at 20% left the caption unreadable on
+   those. Starts earlier, lands harder, and only lifts partway on hover. */
 .motion-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(to bottom, transparent 20%, rgba(3,5,8,0.92) 100%);
-  z-index: 1; opacity: 0.8; transition: opacity 0.4s;
+  background: linear-gradient(to bottom,
+    rgba(3,5,8,0.18)  0%,
+    rgba(3,5,8,0.45) 32%,
+    rgba(3,5,8,0.95) 60%,
+    rgba(3,5,8,1)   100%);
+  z-index: 1; opacity: 1; transition: opacity 0.4s;
 }
+.motion-card:hover .motion-overlay,
+.motion-card.is-touched .motion-overlay { opacity: 0.82; }
 .proj-video-badge {
   position: absolute; top: 16px; left: 16px;
   background: rgba(3,5,8,0.7); border: 1px solid var(--border);
@@ -686,7 +705,14 @@ section::after {
   pointer-events: none;
 }
 .project-card.elocate .proj-content   { position: static; padding: 0; z-index: 2; }
-.project-card.elocate .proj-featured-badge { position: static; display: inline-block; margin-bottom: 18px; }
+/* align-self keeps the badge to its own width — as a flex item it would
+   otherwise stretch across the whole panel. */
+.project-card.elocate .proj-featured-badge {
+  position: static; display: inline-block;
+  align-self: flex-start; margin-bottom: 18px;
+}
+/* The featured cards are wide enough for a third line of summary. */
+.project-card.featured .proj-desc { -webkit-line-clamp: 3; max-width: 52ch; }
 .project-card.elocate .proj-arrow     { position: absolute; top: 24px; right: 24px; z-index: 6; }
 
 /* Phone area — dark bg, phones centered */
@@ -791,26 +817,14 @@ section::after {
   opacity: 0; transition: opacity 0.7s ease;
 }
 .shot-stage .shot.active { opacity: 1; }
+/* The stack (tools, role, team) used to live here as a spec list, which made
+   these two cards far taller than everything else and left them unequal to
+   each other. It now lives in the modal; the face keeps only the summary. */
 .system-card .proj-content {
   position: relative; z-index: 3;
-  padding: 28px 32px 32px;
+  padding: 26px 30px 28px;
   display: flex; flex-direction: column; flex: 1;
 }
-
-/* Spec list — label / value rows */
-.system-specs { list-style: none; margin: 18px 0 0; padding: 0; }
-.system-specs li {
-  font-family: 'Space Mono', monospace;
-  font-size: 10px; color: var(--muted);
-  line-height: 1.6; letter-spacing: 0.03em;
-  padding: 8px 0; border-top: 1px solid var(--border);
-}
-.system-specs li span {
-  display: block;
-  font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--text); opacity: 0.55; margin-bottom: 3px;
-}
-.system-specs li:last-child { margin-bottom: 0; }
 
 /* AETHER platform — green, matching its own brand */
 .system-card.aether-sys .system-shots {
@@ -925,9 +939,57 @@ section::after {
 .proj-tag.alt  { color: var(--accent2); background: rgba(107,140,255,0.1); border-color: rgba(107,140,255,0.2); }
 .proj-tag.alt2 { color: var(--accent3); background: rgba(240,74,255,0.1);  border-color: rgba(240,74,255,0.2); }
 .proj-tag.orange-tag { color: var(--orange); background: rgba(249,115,22,0.1); border-color: rgba(249,115,22,0.2); }
-.proj-name { font-size: 22px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.1; margin-bottom: 8px; }
-.proj-desc { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); line-height: 1.7; max-width: 560px; }
-.proj-org { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--accent2); letter-spacing: 0.1em; margin-top: 8px; }
+/* Card titles are held to a single line — the full name (and any subtitle it
+   needs) lives in the modal, so a long project name can't push the card's
+   text block taller than its neighbours in the same row. */
+.proj-name {
+  font-size: 20px; font-weight: 800;
+  letter-spacing: -0.01em; line-height: 1.15; margin-bottom: 8px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+/* Same idea for the blurb: two lines on every card, everywhere. */
+.proj-desc {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px; color: var(--muted); line-height: 1.65;
+  max-width: 46ch;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.proj-org {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; color: var(--accent2);
+  letter-spacing: 0.14em; text-transform: uppercase;
+  margin-top: 10px; opacity: 0.85;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* "View case →" — the affordance that tells you the card opens a popup.
+   The arrow slides on hover; the whole card is the hit target. */
+.proj-more {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 14px;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; color: var(--accent);
+  letter-spacing: 0.14em; text-transform: uppercase;
+  opacity: 0.75; transition: opacity 0.3s, gap 0.3s;
+}
+.proj-more em { font-style: normal; transition: transform 0.3s; display: inline-block; }
+.project-card:hover .proj-more,
+.project-card.is-touched .proj-more { opacity: 1; }
+.project-card:hover .proj-more em,
+.project-card.is-touched .proj-more em { transform: translateX(4px); }
+
+.orange-more  { color: var(--orange); }
+.aether-more  { color: #1bba6f; }
+.lcibms-more  { color: #c9a274; }
+.orange-org   { color: var(--orange) !important; }
+.lcibms-org   { color: #c9a274 !important; }
+
+/* Keyboard users get the same visible target the pointer gets. */
+.project-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
 .proj-arrow {
   position: absolute; top: 20px; right: 20px; z-index: 4;
   width: 34px; height: 34px; border: 1px solid rgba(74,240,196,0.3);
@@ -1106,7 +1168,7 @@ footer span { color: var(--accent); }
    ------------------------------------------------------------ */
 @media (max-width: 1100px) {
   .motion-grid { grid-template-columns: 1fr 1fr; }
-  .motion-card:nth-child(3) { grid-column: span 2; }
+  .motion-card { min-height: 400px; }
 }
 @media (max-width: 900px) {
   nav { padding: 14px 20px; }
@@ -1145,7 +1207,6 @@ footer span { color: var(--accent); }
 @media (min-width: 641px) and (max-width: 900px) {
   .motion-grid { grid-template-columns: 1fr 1fr; }
   .motion-card { min-height: 320px; }
-  .motion-card:nth-child(3) { grid-column: span 2; }
   .illus-grid { grid-template-columns: 1fr 1fr; }
   .illus-info-card { min-height: 360px; }
 }
@@ -1259,13 +1320,15 @@ footer span { color: var(--accent); }
 .project-card.dakkutek {
   background: #1a1408;
 }
+/* Reaches full strength by ~58% — the caption block starts higher now that
+   each card carries a "View case" line under the meta row. */
 .dakkutek-scrim {
   background: linear-gradient(
     to bottom,
     rgba(26,20,8,0.05)  0%,
-    rgba(26,20,8,0.15) 35%,
-    rgba(26,20,8,0.82) 65%,
-    rgba(26,20,8,0.98) 100%
+    rgba(26,20,8,0.18) 30%,
+    rgba(26,20,8,0.90) 58%,
+    rgba(26,20,8,0.99) 100%
   );
 }
 .project-card.dakkutek:hover,
@@ -1292,9 +1355,9 @@ footer span { color: var(--accent); }
   background: linear-gradient(
     to bottom,
     rgba(3,26,16,0.05)  0%,
-    rgba(3,26,16,0.15) 35%,
-    rgba(3,26,16,0.82) 65%,
-    rgba(3,26,16,0.98) 100%
+    rgba(3,26,16,0.18) 30%,
+    rgba(3,26,16,0.90) 58%,
+    rgba(3,26,16,0.99) 100%
   );
 }
 .project-card.aether:hover,
@@ -1310,7 +1373,7 @@ footer span { color: var(--accent); }
   color: #1bba6f !important;
 }
 .aether-org { color: #1bba6f !important; opacity: 0.8; }
-.project-card.aether .proj-desc { color: #6a9a7a; }
+.project-card.aether .proj-desc { color: #85b596; }
 
 /* ── Responsive ── */
 @media (max-width: 900px) {
@@ -1341,4 +1404,251 @@ footer span { color: var(--accent); }
 
 @media (min-width: 901px) and (max-width: 1100px) {
   .brand-card { min-height: 420px; }
+}
+
+/* ============================================================
+   21. PROJECT DETAIL MODAL
+   One shell reused by every card. `--pm-accent` is set per project
+   from main.js so the popup inherits that project's own colour.
+   ============================================================ */
+.pm-root {
+  --pm-accent: var(--accent);
+  position: fixed; inset: 0;
+  z-index: 9000;
+  display: flex; align-items: center; justify-content: center;
+  padding: 32px;
+}
+.pm-root[hidden] { display: none; }
+/* Page behind the modal must not scroll under it. */
+body.pm-open { overflow: hidden; }
+
+.pm-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(2,4,8,0.82);
+  backdrop-filter: blur(10px);
+  opacity: 0; transition: opacity 0.35s ease;
+}
+.pm-root.open .pm-backdrop { opacity: 1; }
+
+.pm-panel {
+  position: relative;
+  display: grid; grid-template-columns: 1.15fr 0.85fr;
+  width: min(1140px, 100%);
+  /* Definite height, not just a max — the media column's `max-height: 100%`
+     has nothing to resolve against otherwise, and tall screenshots render at
+     natural size and get clipped by the panel's overflow. */
+  height: min(84vh, 700px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow:
+    0 40px 120px rgba(0,0,0,0.7),
+    0 0 0 1px rgba(255,255,255,0.02);
+  overflow: hidden;
+  opacity: 0; transform: translateY(24px) scale(0.97);
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(.25,.46,.45,.94);
+}
+.pm-root.open .pm-panel { opacity: 1; transform: translateY(0) scale(1); }
+
+/* Accent hairline along the top edge */
+.pm-panel::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--pm-accent), transparent 70%);
+  z-index: 5;
+}
+
+.pm-close {
+  position: absolute; top: 16px; right: 16px; z-index: 8;
+  width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(3,5,8,0.7);
+  border: 1px solid var(--border);
+  color: var(--text); cursor: none;
+  transition: border-color 0.25s, color 0.25s, transform 0.25s;
+}
+.pm-close svg { width: 16px; height: 16px; }
+.pm-close:hover { border-color: var(--pm-accent); color: var(--pm-accent); transform: rotate(90deg); }
+
+/* ── Media column ── */
+.pm-media {
+  position: relative;
+  display: flex; flex-direction: column;
+  background: #06090f;
+  background:
+    radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--pm-accent) 14%, transparent) 0%, transparent 70%),
+    #06090f;
+  border-right: 1px solid var(--border);
+  /* min-height:0 — without it this grid item takes its automatic minimum from
+     the content, so a 3360px-tall brand board stretches the column past the
+     panel and gets clipped by the panel's overflow instead of scrolling. */
+  min-width: 0; min-height: 0;
+}
+/* The stage is a plain scroll container; centring happens on the inner
+   wrapper. Making the media a direct flex child of a scrolling flex box let
+   it shrink along the cross axis instead of filling the width — that's what
+   squeezed the 816x3360 LakbayGO board down to a ~90px ribbon. */
+.pm-stage {
+  position: relative; flex: 1;
+  overflow: auto;
+  padding: 28px; min-height: 0;
+}
+.pm-stage-inner {
+  min-height: 100%;
+  display: flex; align-items: center; justify-content: center;
+}
+/* Images run at their full available width and the stage scrolls if they're
+   tall — the brand sheets are 1:4 boards, and scaling one to fit the panel
+   height would leave it a few pixels wide and unreadable. main.js caps the
+   width at the file's own resolution so nothing gets upscaled. */
+.pm-stage img {
+  width: 100%; height: auto;
+  display: block;
+  border: 1px solid var(--border);
+  background: #05070c;
+}
+.pm-stage video {
+  max-width: 100%; max-height: 100%;
+  width: auto; height: auto;
+  object-fit: contain; display: block;
+  border: 1px solid var(--border);
+  background: #05070c;
+}
+
+/* Hint shown only when the board is taller than the stage can show at once. */
+.pm-scroll-hint {
+  display: none; align-items: center; justify-content: center; gap: 7px;
+  /* Bottom padding matters: on single-image projects the thumb strip is
+     hidden, so this is the last thing before the panel edge. */
+  padding: 12px 20px 16px;
+  flex-shrink: 0;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; color: var(--pm-accent);
+  letter-spacing: 0.16em; text-transform: uppercase;
+  opacity: 0.7; pointer-events: none;
+}
+.pm-media.is-scrollable .pm-scroll-hint { display: flex; }
+/* Cut-out phone renders carry their own shadow instead of a frame */
+.pm-stage img.bare { border: none; background: none; filter: drop-shadow(0 24px 50px rgba(0,0,0,0.8)); }
+
+.pm-thumbs {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  padding: 0 28px 22px;
+}
+.pm-thumbs:empty { display: none; }
+.pm-thumb {
+  width: 74px; height: 48px;
+  padding: 0; overflow: hidden;
+  border: 1px solid var(--border);
+  background: #05070c; cursor: none;
+  opacity: 0.45; transition: opacity 0.25s, border-color 0.25s;
+}
+.pm-thumb img,
+.pm-thumb video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pm-thumb:hover { opacity: 0.8; }
+.pm-thumb.active { opacity: 1; border-color: var(--pm-accent); }
+
+/* ── Info column ── */
+.pm-info {
+  padding: 44px 40px 40px;
+  overflow-y: auto;
+  min-width: 0; min-height: 0;
+}
+.pm-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; color: var(--pm-accent);
+  letter-spacing: 0.22em; text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.pm-title {
+  font-size: clamp(26px, 3vw, 36px); font-weight: 800;
+  letter-spacing: -0.02em; line-height: 1.05;
+  margin-bottom: 16px;
+}
+.pm-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
+/* Every accent-tinted surface declares an rgba fallback first — if a browser
+   doesn't support color-mix() it drops that declaration and keeps this one. */
+.pm-tag {
+  font-family: 'Space Mono', monospace; font-size: 9px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 4px 9px; border-radius: 2px;
+  color: var(--pm-accent);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.14);
+  background: color-mix(in srgb, var(--pm-accent) 10%, transparent);
+  border-color: color-mix(in srgb, var(--pm-accent) 26%, transparent);
+}
+.pm-body p {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px; color: var(--muted);
+  line-height: 1.85; margin-bottom: 14px;
+}
+.pm-body p:last-child { margin-bottom: 0; }
+
+.pm-specs { list-style: none; margin: 26px 0 0; padding: 0; }
+.pm-specs:empty { display: none; }
+.pm-specs li {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px; color: var(--muted);
+  line-height: 1.7; letter-spacing: 0.02em;
+  padding: 11px 0; border-top: 1px solid var(--border);
+}
+.pm-specs li span {
+  display: block;
+  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text); opacity: 0.5; margin-bottom: 4px;
+}
+
+.pm-links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 28px; }
+.pm-links:empty { display: none; }
+.pm-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 18px;
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  text-decoration: none; cursor: none;
+  color: var(--pm-accent);
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.04);
+  border-color: color-mix(in srgb, var(--pm-accent) 32%, transparent);
+  background: color-mix(in srgb, var(--pm-accent) 8%, transparent);
+  transition: border-color 0.25s, background 0.25s, transform 0.25s;
+}
+.pm-link:hover {
+  border-color: var(--pm-accent);
+  background: rgba(255,255,255,0.09);
+  background: color-mix(in srgb, var(--pm-accent) 16%, transparent);
+  transform: translateY(-2px);
+}
+
+/* Scrollbar — thin, matching the surface */
+.pm-info::-webkit-scrollbar,
+.pm-stage::-webkit-scrollbar { width: 6px; }
+.pm-info::-webkit-scrollbar-track,
+.pm-stage::-webkit-scrollbar-track { background: transparent; }
+.pm-info::-webkit-scrollbar-thumb,
+.pm-stage::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* ── Modal responsive — stack media over info on narrow screens ── */
+@media (max-width: 900px) {
+  .pm-root { padding: 0; }
+  .pm-panel {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    width: 100%; max-height: 100vh; height: 100%;
+  }
+  .pm-media { border-right: none; border-bottom: 1px solid var(--border); }
+  /* Taller than it needs to be for a 16:10 screenshot, but the tall brand
+     boards are the constraint here — more of the sheet per screenful. */
+  .pm-stage { padding: 20px; height: 48vh; flex: none; }
+  .pm-thumbs { padding: 0 20px 16px; }
+  .pm-thumb { width: 58px; height: 38px; }
+  .pm-info { padding: 28px 24px 40px; }
+  .pm-close { top: 12px; right: 12px; width: 34px; height: 34px; }
+}
+@media (max-width: 480px) {
+  .pm-stage { height: 44vh; }
+  .pm-title { font-size: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pm-panel { transform: none; }
 }
